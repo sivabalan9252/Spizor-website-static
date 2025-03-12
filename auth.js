@@ -99,8 +99,3 @@ window.onload = function() {
         verifyOTP();
     }
 };
-
-// Expose functions to the global scope
-window.sendOTP = sendOTP;
-window.verifyOTP = verifyOTP;
-window.saveUserInfo = saveUserInfo;
