@@ -1,11 +1,10 @@
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_PROJECT_ID.appspot.com",
-    messagingSenderId: "YOUR_SENDER_ID",
-    appId: "YOUR_APP_ID"
+  apiKey: "AIzaSyDlDVpjDBQH3-VfNaG4NY0ZiyPKWBcac4Y",
+  authDomain: "spizor-website.firebaseapp.com",
+  projectId: "spizor-website",
+  storageBucket: "spizor-website.firebasestorage.app",
+  messagingSenderId: "327411463627",
+  appId: "1:327411463627:web:519a17f4c7f247a405324e",
+  measurementId: "G-SVTL3Z3EN8"
 };
-firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
-const db = firebase.firestore();
