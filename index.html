@@ -5,15 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Spizor - Spice Your Property Search</title>
 
-    <!-- Firebase SDKs (Ensure they load first) -->
-<script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-auth.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js"></script>
-
-<!-- Firebase Config & Auth -->
-<script src="firebase.js"></script>  <!-- If you have a separate Firebase config file -->
-<script src="auth.js" defer></script>
-
     <style>
         body {
             margin: 0;
@@ -122,7 +113,14 @@
         &copy; 2025 Spizor. All rights reserved.
     </footer>
 
+    <!-- Firebase SDKs (Loaded at Bottom for Performance) -->
+    <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js"></script>
 
+    <!-- Firebase Config & Auth -->
+    <script src="firebase.js"></script>  <!-- Keep this only if firebase.js exists -->
+    <script src="auth.js" defer></script>  <!-- Ensure defer is added -->
 
     <!-- Attach Event Listeners AFTER auth.js is loaded -->
     <script>
@@ -132,6 +130,5 @@
             document.getElementById("save-user-btn").addEventListener("click", saveUserInfo);
         });
     </script>
-
 </body>
 </html>
