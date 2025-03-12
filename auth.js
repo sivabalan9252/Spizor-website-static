@@ -1,3 +1,4 @@
+// Firebase Configuration
 const firebaseConfig = {
     apiKey: "YOUR_API_KEY",
     authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
@@ -7,20 +8,22 @@ const firebaseConfig = {
     appId: "YOUR_APP_ID"
 };
 
+// Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore();
 
+// Send OTP via Email
 function sendOTP() {
     const email = document.getElementById("email").value;
-    
+
     if (!email) {
         alert("Please enter your email.");
         return;
     }
 
     const actionCodeSettings = {
-        url: window.location.href, // Redirect back to this page after login
+        url: window.location.href, // Redirects back after login
         handleCodeInApp: true
     };
 
@@ -32,9 +35,11 @@ function sendOTP() {
         .catch(error => alert(error.message));
 }
 
+// Verify OTP and Save User Info
 function verifyOTP() {
-    if (auth.isSignInWithEmailLink(window.location.href)) {
+    if (firebase.auth().isSignInWithEmailLink(window.location.href)) {
         let email = localStorage.getItem("emailForSignIn");
+
         if (!email) {
             email = prompt("Please enter your email to confirm login:");
         }
@@ -43,28 +48,30 @@ function verifyOTP() {
             .then(result => {
                 localStorage.removeItem("emailForSignIn");
 
-                // Show input fields for additional details
+                // Show fields for additional details
                 document.getElementById("otp").style.display = "none";
                 document.getElementById("verify-btn").style.display = "none";
                 document.getElementById("name").style.display = "block";
                 document.getElementById("phone").style.display = "block";
                 document.getElementById("type").style.display = "block";
+                document.getElementById("submit-details-btn").style.display = "block";
 
                 alert("OTP Verified! Please fill in additional details.");
-
-                // Save user info in Firestore once user enters details
-                document.getElementById("type").addEventListener("change", saveUserInfo);
             })
             .catch(error => alert(error.message));
     }
 }
 
+// Save user details in Firestore
 function saveUserInfo() {
     const user = auth.currentUser;
-    if (!user) return;
+    if (!user) {
+        alert("User not found. Please log in again.");
+        return;
+    }
 
-    const name = document.getElementById("name").value;
-    const phone = document.getElementById("phone").value;
+    const name = document.getElementById("name").value.trim();
+    const phone = document.getElementById("phone").value.trim();
     const type = document.getElementById("type").value;
 
     if (!name || !phone || !type) {
@@ -81,9 +88,7 @@ function saveUserInfo() {
     })
     .then(() => {
         alert("User details saved successfully!");
-
-        // Redirect to homepage after login
-        window.location.href = "index.html"; // Change this to the actual homepage
+        window.location.href = "index.html"; // Redirect to homepage
     })
     .catch(error => alert(error.message));
 }
