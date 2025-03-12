@@ -99,3 +99,25 @@ window.onload = function() {
         verifyOTP();
     }
 };
+
+window.sendOTP = function() {
+    const email = document.getElementById("email").value;
+    
+    if (!email) {
+        alert("Please enter your email.");
+        return;
+    }
+
+    const actionCodeSettings = {
+        url: window.location.href, // Redirect back to this page after login
+        handleCodeInApp: true
+    };
+
+    firebase.auth().sendSignInLinkToEmail(email, actionCodeSettings)
+        .then(() => {
+            alert("OTP link sent! Check your email.");
+            localStorage.setItem("emailForSignIn", email);
+        })
+        .catch(error => alert(error.message));
+};
+
