@@ -118,18 +118,16 @@
         &copy; 2025 Spizor. All rights reserved.
     </footer>
 
-    <!-- Firebase Config & Auth -->
-    <script src="firebase.js"></script>
-    <script src="auth.js"></script>
-    <script type="module" src="firebase-auth.js"></script>
-    <script type="module" src="firebase-firestore.js"></script>
+    <!-- Auth Script (Defer ensures it loads after the page) -->
+    <script src="auth.js" defer></script>
 
-
-    <!-- Attach Event Listeners -->
+    <!-- Attach Event Listeners AFTER auth.js is loaded -->
     <script>
-        document.getElementById("send-otp-btn").addEventListener("click", sendOTP);
-        document.getElementById("verify-btn").addEventListener("click", verifyOTP);
-        document.getElementById("save-user-btn").addEventListener("click", saveUserInfo);
+        document.addEventListener("DOMContentLoaded", function () {
+            document.getElementById("send-otp-btn").addEventListener("click", sendOTP);
+            document.getElementById("verify-btn").addEventListener("click", verifyOTP);
+            document.getElementById("save-user-btn").addEventListener("click", saveUserInfo);
+        });
     </script>
 
 </body>
