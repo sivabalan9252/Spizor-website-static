@@ -37,7 +37,7 @@ function sendOTP() {
 
 // Verify OTP and Save User Info
 function verifyOTP() {
-    if (firebase.auth().isSignInWithEmailLink(window.location.href)) {
+    if (auth.isSignInWithEmailLink(window.location.href)) {
         let email = localStorage.getItem("emailForSignIn");
 
         if (!email) {
@@ -54,7 +54,7 @@ function verifyOTP() {
                 document.getElementById("name").style.display = "block";
                 document.getElementById("phone").style.display = "block";
                 document.getElementById("type").style.display = "block";
-                document.getElementById("submit-details-btn").style.display = "block";
+                document.getElementById("save-user-btn").style.display = "block";
 
                 alert("OTP Verified! Please fill in additional details.");
             })
@@ -95,29 +95,12 @@ function saveUserInfo() {
 
 // Auto-login if OTP link is clicked
 window.onload = function() {
-    if (firebase.auth().isSignInWithEmailLink(window.location.href)) {
+    if (auth.isSignInWithEmailLink(window.location.href)) {
         verifyOTP();
     }
 };
 
-window.sendOTP = function() {
-    const email = document.getElementById("email").value;
-    
-    if (!email) {
-        alert("Please enter your email.");
-        return;
-    }
-
-    const actionCodeSettings = {
-        url: window.location.href, // Redirect back to this page after login
-        handleCodeInApp: true
-    };
-
-    firebase.auth().sendSignInLinkToEmail(email, actionCodeSettings)
-        .then(() => {
-            alert("OTP link sent! Check your email.");
-            localStorage.setItem("emailForSignIn", email);
-        })
-        .catch(error => alert(error.message));
-};
-
+// Expose functions to the global scope
+window.sendOTP = sendOTP;
+window.verifyOTP = verifyOTP;
+window.saveUserInfo = saveUserInfo;
