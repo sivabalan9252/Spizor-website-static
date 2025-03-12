@@ -93,6 +93,11 @@ function saveUserInfo() {
     .catch(error => alert(error.message));
 }
 
+// Attach functions to window (GLOBAL SCOPE FIX)
+window.sendOTP = sendOTP;
+window.verifyOTP = verifyOTP;
+window.saveUserInfo = saveUserInfo;
+
 // Auto-login if OTP link is clicked
 window.onload = function() {
     if (auth.isSignInWithEmailLink(window.location.href)) {
