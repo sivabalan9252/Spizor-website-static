@@ -4,6 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Spizor - Spice Your Property Search</title>
+    
+    <!-- Firebase SDK (Placed in Head) -->
+    <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js"></script>
+
+    <!-- Firebase Config & Auth -->
+    <script src="firebase.js"></script>
+    <script src="auth.js"></script>
+
     <style>
         /* General Styles */
         body {
@@ -90,25 +100,37 @@
             margin: 10px 0;
         }
 
-        /* 360° Tour Container */
-        .tour-container {
-            position: relative;
-            width: 100%;
-            max-width: 1200px;
-            aspect-ratio: 16 / 9;
-            margin: 20px auto;
-            border: 2px solid #ddd;
+        /* Login Section */
+        #login-section {
+            text-align: center;
+            padding: 20px;
+            margin-top: 20px;
+            background: #f4f4f4;
             border-radius: 10px;
-            overflow: hidden;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
-        .tour-container iframe {
-            width: 100%;
-            height: 100%;
+        #login-section input {
+            padding: 10px;
+            margin: 10px;
+            width: 80%;
+            max-width: 300px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        #login-section button {
+            padding: 10px 15px;
+            background: #0077e6;
+            color: white;
             border: none;
-            transform-style: preserve-3d;
-            will-change: transform;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        #login-section button:hover {
+            background: #0056b3;
         }
 
         /* Footer Section */
@@ -137,25 +159,6 @@
             background: linear-gradient(to right, #0056b3, #0077e6);
             border-radius: 50% 50% 0 0;
         }
-
-        /* Mobile Friendly Design */
-        @media (max-width: 600px) {
-            header h1 {
-                font-size: 28px;
-            }
-
-            header p {
-                font-size: 16px;
-            }
-
-            .section h2 {
-                font-size: 22px;
-            }
-
-            .section p {
-                font-size: 16px;
-            }
-        }
     </style>
 </head>
 <body>
@@ -166,59 +169,22 @@
         <p>Spice Your Property Search</p>
     </header>
 
-    <!-- Content Section -->
-    <div class="content">
-        <!-- Property Details Section -->
-        <div class="section">
-            <h2>Property for Rent</h2>
-            <p>Location: 3rd Cross, 1st Floor, Opposite to Royal Pearl Hospital, Trichy</p>
-            <p>Contact: <strong>9080825440</strong> for property details</p>
-        </div>
-
-        <!-- 360° Tour Section -->
-        <div class="section">
-            <h2>View the 360° Tour Below</h2>
-            <p>You can click and navigate across rooms and scroll to view the rooms in 360°.</p>
-            <div class="tour-container">
-                <iframe 
-                src="https://sivabalan9252.github.io/1st-floor-3rd-cross-thillai-nagar/" 
-                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;" 
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen" 
-                allowfullscreen>
-                </iframe>
-            </div>
-        </div>
-
-        <!-- Promotions Section -->
-        <div class="section">
-            <h2>Promote Your Property with us!</h2>
-            <p>For 360° tours, video shoots, photoshoots, and promotions for your property, contact us at <strong>9080825440</strong>.</p>
-            <p>Stay tuned! Own property website coming soon: <a href="https://www.spizor.in" target="_blank">www.spizor.in</a></p>
-        </div>
-    </div>
-
+    <!-- Login Section -->
     <div id="login-section">
-    <h2>Login to Access</h2>
-    <input type="email" id="email" placeholder="Enter your email">
-    <button onclick="sendOTP()">Send OTP</button>
-    <input type="text" id="otp" placeholder="Enter OTP" style="display:none;">
-    <button onclick="verifyOTP()" style="display:none;" id="verify-btn">Verify OTP</button>
+        <h2>Login to Access</h2>
+        <input type="email" id="email" placeholder="Enter your email">
+        <button onclick="sendOTP()">Send OTP</button>
+        <input type="text" id="otp" placeholder="Enter OTP" style="display:none;">
+        <button onclick="verifyOTP()" style="display:none;" id="verify-btn">Verify OTP</button>
     </div>
 
     <div id="content-section" style="display:none;">
-    <!-- Your existing content goes here -->
+        <!-- Your existing content goes here -->
     </div>
-
-    <script src="auth.js"></script>
-
 
     <!-- Footer Section -->
     <footer>
         &copy; 2025 Spizor. All rights reserved.
     </footer>
 </body>
-<script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-auth.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js"></script>
-
 </html>
