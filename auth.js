@@ -13,9 +13,12 @@ firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore();
 
+// Set default language
+auth.languageCode = 'en';  // Adjust if needed (e.g., 'es' for Spanish)
+
 // Send OTP via Email
 function sendOTP() {
-    const email = document.getElementById("email").value;
+    const email = document.getElementById("email").value.trim();
 
     if (!email) {
         alert("Please enter your email.");
@@ -32,7 +35,7 @@ function sendOTP() {
             alert("OTP link sent! Check your email.");
             localStorage.setItem("emailForSignIn", email);
         })
-        .catch(error => alert(error.message));
+        .catch(error => alert("Error sending OTP: " + error.message));
 }
 
 // Verify OTP and Save User Info
@@ -42,6 +45,7 @@ function verifyOTP() {
 
         if (!email) {
             email = prompt("Please enter your email to confirm login:");
+            if (!email) return alert("Email is required.");
         }
 
         auth.signInWithEmailLink(email, window.location.href)
@@ -58,8 +62,13 @@ function verifyOTP() {
 
                 alert("OTP Verified! Please fill in additional details.");
             })
-            .catch(error => alert(error.message));
+            .catch(error => alert("Verification failed: " + error.message));
     }
+}
+
+// Validate Phone Number
+function isValidPhone(phone) {
+    return /^[0-9]{10,15}$/.test(phone); // Accepts 10 to 15 digit numbers
 }
 
 // Save user details in Firestore
@@ -79,6 +88,11 @@ function saveUserInfo() {
         return;
     }
 
+    if (!isValidPhone(phone)) {
+        alert("Please enter a valid phone number.");
+        return;
+    }
+
     db.collection("users").doc(user.uid).set({
         email: user.email,
         name: name,
@@ -90,10 +104,10 @@ function saveUserInfo() {
         alert("User details saved successfully!");
         window.location.href = "index.html"; // Redirect to homepage
     })
-    .catch(error => alert(error.message));
+    .catch(error => alert("Error saving user details: " + error.message));
 }
 
-// Attach functions to window (GLOBAL SCOPE FIX)
+// Attach functions to window (Global Scope Fix)
 window.sendOTP = sendOTP;
 window.verifyOTP = verifyOTP;
 window.saveUserInfo = saveUserInfo;
@@ -101,6 +115,10 @@ window.saveUserInfo = saveUserInfo;
 // Auto-login if OTP link is clicked
 window.onload = function() {
     if (auth.isSignInWithEmailLink(window.location.href)) {
-        verifyOTP();
+        if (localStorage.getItem("emailForSignIn")) {
+            verifyOTP();
+        } else {
+            alert("No email found in storage. Please log in manually.");
+        }
     }
 };
