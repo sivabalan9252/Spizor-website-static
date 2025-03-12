@@ -33,3 +33,9 @@ function saveUserData(user) {
         console.log("User data saved.");
     }).catch(error => console.error("Error saving user:", error));
 }
+
+window.onload = function() {
+    if (firebase.auth().isSignInWithEmailLink(window.location.href)) {
+        verifyOTP();
+    }
+};
