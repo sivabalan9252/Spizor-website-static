@@ -6,5 +6,9 @@ const firebaseConfig = {
   storageBucket: "spizor-website.firebasestorage.app",
   messagingSenderId: "327411463627",
   appId: "1:327411463627:web:519a17f4c7f247a405324e",
-  measurementId: "G-SVTL3Z3EN8"
 };
+// Firebase Initialization
+const app = firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const db = firebase.firestore();
+const storage = firebase.storage();
